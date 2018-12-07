@@ -59,7 +59,7 @@ for guard_id in parsed_data:
 		guard_with_most_sleep = guard_id
 		total_time_asleep = time_asleep
 
-# get minute where the guard slept the most
+# get minute where the guard with the most sleep slept the most
 most_frequent_minute = None
 max_minute_counter = 0
 for minute in range(60):
@@ -71,5 +71,21 @@ for minute in range(60):
 		most_frequent_minute = minute
 		max_minute_counter = minute_counter
 
-print(guard_with_most_sleep * most_frequent_minute)
-	
+print("Part 1: " + str(guard_with_most_sleep * most_frequent_minute))
+
+# get minute where the guards slept the most
+most_frequent_minute = None
+max_minute_counter = 0
+most_frequent_minute_guard_id = None
+for minute in range(60):
+	for guard_id in parsed_data:
+		minute_counter = 0
+		for time in parsed_data[guard_id]:
+			if time[0] <= minute <= time[1]:
+				minute_counter = minute_counter + 1
+		if most_frequent_minute is None or max_minute_counter < minute_counter:
+			most_frequent_minute = minute
+			max_minute_counter = minute_counter
+			most_frequent_minute_guard_id = guard_id
+
+print("Part 2: " + str(most_frequent_minute * most_frequent_minute_guard_id))
