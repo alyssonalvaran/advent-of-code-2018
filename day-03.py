@@ -9,6 +9,8 @@ with open ("data-day-03.txt", "r") as file:
 # convert string variable data to a list of strings
 data = [d.replace("\n", "") for d in data]
 
+# data = ["#3 @ 5,5: 2x2", "#1 @ 1,3: 4x4", "#2 @ 3,1: 4x4"]
+
 coordinates = []
 coordinates_with_id = {}
 for d in data:
@@ -34,20 +36,15 @@ for d in data:
 	# append coordinates with id as key-value pair
 	coordinates_with_id[d[0]] = coordinates_per_id
 
+# count overlapping coordinates
 overlap_count = len(set([c for c in coordinates if coordinates.count(c) > 1]))
 print("Part 1: " + str(overlap_count))
 
-unique_id = None
+# get unique coordinates
+unique_coordinates = set([c for c in coordinates if coordinates.count(c) == 1])
+# get ID of coordinates that did not overlap
 for c_key in coordinates_with_id:
-	#check each coordinate if has a duplicate in the coordinates list
-	has_duplicates = False
-	for coordinate in coordinates_with_id[c_key]:		
-		if coordinates.count(coordinate) > 1:
-			has_duplicates = True
-	
-	# if it doesn't have a duplicate, set it as the value of unique_id
-	# (only works because there's exactly only one id with no duplicates)
-	if not has_duplicates:
-		unique_id = c_key
-	
-print("Part 2: " + str(unique_id))
+	print("c_key: " + str(c_key))
+	if set(coordinates_with_id[c_key]).issubset(unique_coordinates):
+		print("Part 2: " + str(c_key))
+		break
